@@ -1,0 +1,25 @@
+{
+  "name": "Portfolio_project_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grakify90/Portfolio_project_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grakify90/Portfolio_project_backend/issues"
+  },
+  "homepage": "https://github.com/grakify90/Portfolio_project_backend#readme",
+  "dependencies": {
+    "pg": "^8.3.0",
+    "sequelize": "^6.3.4",
+    "sequelize-cli": "^6.2.0"
+  }
+}
