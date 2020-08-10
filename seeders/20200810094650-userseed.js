@@ -1,5 +1,6 @@
 "use strict";
 const bcrypt = require("bcrypt");
+const { SALT_ROUNDS } = require("../config/constants");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -10,7 +11,7 @@ module.exports = {
           firstName: "Nina",
           lastName: "van Es",
           email: "ninavanes1990@hotmail.com",
-          password: bcrypt.hashSync("test1234", 10),
+          password: bcrypt.hashSync("test1234", SALT_ROUNDS),
           aboutMe: "Hello I love cycling <3",
           gender: "f",
           dateOfBirth: new Date(1990, 10, 18),
@@ -21,7 +22,7 @@ module.exports = {
           firstName: "Johan",
           lastName: "van Es",
           email: "johanvanes@hotmail.com",
-          password: bcrypt.hashSync("test1234", 10),
+          password: bcrypt.hashSync("test1234", SALT_ROUNDS),
           aboutMe: "Retired and roaring",
           gender: "m",
           dateOfBirth: new Date(1949, 10, 18),
@@ -32,7 +33,7 @@ module.exports = {
           firstName: "Henk",
           lastName: "van Es",
           email: "henk@hotmail.com",
-          password: bcrypt.hashSync("test1234", 10),
+          password: bcrypt.hashSync("test1234", SALT_ROUNDS),
           aboutMe: "Retired and roaring",
           gender: "m",
           dateOfBirth: new Date(1930, 10, 30),
@@ -43,7 +44,7 @@ module.exports = {
           firstName: "Greet",
           lastName: "van Es",
           email: "greet@hotmail.com",
-          password: bcrypt.hashSync("test1234", 10),
+          password: bcrypt.hashSync("test1234", SALT_ROUNDS),
           aboutMe: "Retired and roaring",
           gender: "f",
           dateOfBirth: new Date(1960, 10, 13),
@@ -54,7 +55,7 @@ module.exports = {
           firstName: "Keesje",
           lastName: "van Es",
           email: "keesje@hotmail.com",
-          password: bcrypt.hashSync("test1234", 10),
+          password: bcrypt.hashSync("test1234", SALT_ROUNDS),
           aboutMe: "Retired and roar",
           gender: "m",
           dateOfBirth: new Date(1956, 10, 18),
@@ -65,7 +66,7 @@ module.exports = {
           firstName: "San",
           lastName: "van Es",
           email: "san@hotmail.com",
-          password: bcrypt.hashSync("test1234", 10),
+          password: bcrypt.hashSync("test1234", SALT_ROUNDS),
           aboutMe: "Rrrrrrrr",
           gender: "f",
           dateOfBirth: new Date(1958, 10, 18),
