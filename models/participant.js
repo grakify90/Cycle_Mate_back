@@ -12,9 +12,12 @@ module.exports = (sequelize, DataTypes) => {
       participant.belongsTo(models.trip);
     }
   }
-  participant.init({
-    sequelize,
-    modelName: "participant",
-  });
+  participant.init(
+    {},
+    {
+      sequelize,
+      modelName: "participant",
+    }
+  );
   return participant;
 };
