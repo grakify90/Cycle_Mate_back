@@ -18,14 +18,38 @@ module.exports = (sequelize, DataTypes) => {
   }
   trip.init(
     {
-      date: DataTypes.STRING,
-      locationCity: DataTypes.STRING,
-      locationProvince: DataTypes.STRING,
-      lengthKM: DataTypes.INTEGER,
-      numPeopleAllowed: DataTypes.INTEGER,
-      typeBike: DataTypes.STRING,
-      description: DataTypes.TEXT,
-      tempo: DataTypes.STRING,
+      date: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      locationCity: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      locationProvince: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lengthKM: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      numPeopleAllowed: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      typeBike: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      tempo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
