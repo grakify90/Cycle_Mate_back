@@ -29,8 +29,7 @@ router.post("/login", async (req, res, next) => {
     const token = toJWT({ userId: user.id });
     return res.status(200).send({ token, ...user.dataValues });
   } catch (error) {
-    console.log(error);
-    return res.status(400).send({ message: "Something went wrong, sorry" });
+    return res.status(400).send(error.message);
   }
 });
 
@@ -83,48 +82,41 @@ router.post("/signup", async (req, res) => {
         .send({ message: "There is an existing account with this email" });
     }
 
-    return res.status(400).send({ message: "Something went wrong, sorry" });
+    return res.status(400).send(error.message);
   }
 });
 
 //update my user info
-////http PATCH localhost:4000/updateme Authorization:"Bearer token" lastName=Hoiiii
-router.patch("/update/:userId", authMiddleware, async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    password,
-    aboutMe,
-    gender,
-    dateOfBirth,
-  } = req.body;
-
-  const userToBeUpdatedId = parseInt(req.params.userId);
-  const userToBeUpdated = await User.findByPk(userToBeUpdatedId);
+//http PATCH localhost:4000/update/1 Authorization:"Bearer token" lastName=Kato
+router.patch("/update", authMiddleware, async (req, res) => {
+  const userId = req.user.id;
+  const userToBeUpdated = await User.findByPk(userId);
 
   try {
     const updatedUser = await userToBeUpdated.update({
-      firstName,
-      lastName,
-      email,
-      password: bcrypt.hashSync(password, SALT_ROUNDS),
-      aboutMe,
-      gender,
-      dateOfBirth,
+      ...req.body,
     });
     res.send(updatedUser);
   } catch (error) {
-    return res.status(400).send({ message: "Something went wrong, sorry" });
+    return res.status(400).send(error.message);
   }
 });
 
-router.patch("/:artworkId", async (req, res) => {
-  const specificArtwork = await Artwork.findByPk(req.params.artworkId);
-  const updatedHeartsArtwork = await specificArtwork.update({
-    hearts: specificArtwork.hearts + 1,
-  });
-  res.send(updatedHeartsArtwork);
+//update password user
+//http PATCH localhost:4000/updatepassword/1 Authorization:"Bearer token" password=secret
+router.patch("/updatepassword", authMiddleware, async (req, res) => {
+  const userId = req.user.id;
+  const userToBeUpdated = await User.findByPk(userId);
+  const { password } = req.body;
+
+  try {
+    const updatedUser = await userToBeUpdated.update({
+      ...{ password: bcrypt.hashSync(password, SALT_ROUNDS) },
+    });
+    res.send(updatedUser);
+  } catch (error) {
+    return res.status(400).send(error.message);
+  }
 });
 
 // The /me endpoint can be used to:
