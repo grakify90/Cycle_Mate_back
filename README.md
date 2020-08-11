@@ -1,4 +1,4 @@
-# Cycle Mate Backend
+# Cycle Mate || Enjoying our love for cycling together 
 
 ## Database Model
 
