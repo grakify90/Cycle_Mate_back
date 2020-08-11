@@ -7,11 +7,6 @@ const { SALT_ROUNDS } = require("../config/constants");
 
 const router = new Router();
 
-router.get("/", async (req, res, next) => {
-  const allUsers = await User.findAll();
-  res.send(allUsers);
-});
-
 router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -90,6 +85,46 @@ router.post("/signup", async (req, res) => {
 
     return res.status(400).send({ message: "Something went wrong, sorry" });
   }
+});
+
+//update my user info
+////http PATCH localhost:4000/updateme Authorization:"Bearer token" lastName=Hoiiii
+router.patch("/update/:userId", authMiddleware, async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    aboutMe,
+    gender,
+    dateOfBirth,
+  } = req.body;
+
+  const userToBeUpdatedId = parseInt(req.params.userId);
+  const userToBeUpdated = await User.findByPk(userToBeUpdatedId);
+
+  try {
+    const updatedUser = await userToBeUpdated.update({
+      firstName,
+      lastName,
+      email,
+      password: bcrypt.hashSync(password, SALT_ROUNDS),
+      aboutMe,
+      gender,
+      dateOfBirth,
+    });
+    res.send(updatedUser);
+  } catch (error) {
+    return res.status(400).send({ message: "Something went wrong, sorry" });
+  }
+});
+
+router.patch("/:artworkId", async (req, res) => {
+  const specificArtwork = await Artwork.findByPk(req.params.artworkId);
+  const updatedHeartsArtwork = await specificArtwork.update({
+    hearts: specificArtwork.hearts + 1,
+  });
+  res.send(updatedHeartsArtwork);
 });
 
 // The /me endpoint can be used to:
