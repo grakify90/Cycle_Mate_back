@@ -1,6 +1,12 @@
-## Cycle Mate Backend
+# Cycle Mate Backend
 
-# All Endpoints
+## Database Model
+
+<img src="DataBase-diagram.png"
+     alt="Database model"
+     style="float: left; margin-right: 10px;" />
+
+## All Endpoints
 
 **USER**
 
