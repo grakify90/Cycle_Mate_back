@@ -8,6 +8,7 @@ const router = new Router();
 
 //create a new participant (user him/herself) for specific trip
 router.post("/:tripId", authMiddleware, async (req, res, next) => {
+  console.log(req.user.id);
   try {
     const userParticipantId = req.user.id;
     const tripId = req.params.tripId;

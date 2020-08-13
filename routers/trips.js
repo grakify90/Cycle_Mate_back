@@ -39,6 +39,7 @@ router.get("/:tripId", async (req, res, next) => {
 router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const {
+      title,
       date,
       locationCity,
       locationProvince,
@@ -50,6 +51,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       startingTime,
     } = req.body;
     if (
+      !title ||
       !date ||
       !locationCity ||
       !locationProvince ||
@@ -68,6 +70,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       const userCreatingTrip = req.user.id;
       const newTrip = await Trip.create({
         userId: userCreatingTrip,
+        title,
         date,
         locationCity,
         locationProvince,
