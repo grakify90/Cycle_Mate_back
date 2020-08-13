@@ -91,10 +91,16 @@ router.post("/signup", async (req, res) => {
 router.patch("/update", authMiddleware, async (req, res) => {
   const userId = req.user.id;
   const userToBeUpdated = await User.findByPk(userId);
+  const { firstName, lastName, email, aboutMe, gender, dateOfBirth } = req.body;
 
   try {
     const updatedUser = await userToBeUpdated.update({
-      ...req.body,
+      firstName,
+      lastName,
+      email,
+      aboutMe,
+      gender,
+      dateOfBirth,
     });
     res.send(updatedUser);
   } catch (error) {

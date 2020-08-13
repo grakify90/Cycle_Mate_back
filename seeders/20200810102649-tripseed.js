@@ -8,6 +8,7 @@ module.exports = {
         {
           userId: 1,
           date: new Date(2020, 8, 20),
+          title: "Trip around the island",
           startingTime: "13:30",
           locationCity: "Dordrecht",
           locationProvince: "Zuid-Holland",
@@ -22,6 +23,7 @@ module.exports = {
         {
           userId: 2,
           date: new Date(2020, 8, 22),
+          title: "Through the woods and dunes",
           startingTime: "8:30",
           locationCity: "Loonse en Drunense Duinen",
           locationProvince: "Noord-Brabant",
@@ -36,6 +38,7 @@ module.exports = {
         {
           userId: 2,
           date: new Date(2020, 8, 23),
+          title: "Rottemeren and the beach",
           startingTime: "11:00",
           locationCity: "Rotterdam",
           locationProvince: "South-Holland",
