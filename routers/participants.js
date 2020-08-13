@@ -49,7 +49,8 @@ router.patch("/:tripId", authMiddleware, async (req, res, next) => {
         tripId: tripId,
         userId: userParticipantId,
       });
-      res.send(newParticipant);
+      const userThatIsParticipant = await User.findByPk(userParticipantId);
+      res.send(userThatIsParticipant);
     }
   } catch (error) {
     return res.status(400).send(error.message);
