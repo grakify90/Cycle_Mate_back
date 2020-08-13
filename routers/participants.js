@@ -30,6 +30,32 @@ router.post("/:tripId", authMiddleware, async (req, res, next) => {
   }
 });
 
+//create a new participant (user him/herself) for specific trip
+router.patch("/:tripId", authMiddleware, async (req, res, next) => {
+  try {
+    const userParticipantId = req.user.id;
+    const tripId = req.params.tripId;
+    const userAlreadyParticipant = await Participant.findAll({
+      where: { userId: userParticipantId, tripId: tripId },
+    });
+    if (userAlreadyParticipant.length > 0) {
+      const participantToBeDeleted = await Participant.findOne({
+        where: { userId: userParticipantId, tripId: tripId },
+      });
+      const deletedParticipant = await participantToBeDeleted.destroy();
+      res.send(deletedParticipant);
+    } else {
+      const newParticipant = await Participant.create({
+        tripId: tripId,
+        userId: userParticipantId,
+      });
+      res.send(newParticipant);
+    }
+  } catch (error) {
+    return res.status(400).send(error.message);
+  }
+});
+
 //delete participant (user him/herself) for specific trip
 router.delete("/:tripId", authMiddleware, async (req, res, next) => {
   try {

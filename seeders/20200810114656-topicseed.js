@@ -9,7 +9,8 @@ module.exports = {
           userId: 5,
           title: "How do I change my tire?",
           content: "I'm totally lost, please help",
-          imageUrl: null,
+          imageUrl:
+            "https://www.sefiles.net/merchant/364/images/site/3130061151_89c05e6440.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

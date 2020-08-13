@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   trip.init(
     {
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       date: {
         type: DataTypes.DATEONLY,
         allowNull: false,
