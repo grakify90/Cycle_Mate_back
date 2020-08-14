@@ -16,6 +16,18 @@ router.get("/", async (req, res, next) => {
   res.send(allTrips);
 });
 
+router.get("/oneuser", authMiddleware, async (req, res, next) => {
+  const userParticipatingInTrip = req.user.id;
+  try {
+    const userWithTrips = await User.findByPk(userParticipatingInTrip, {
+      include: [{ model: Trip, as: "participant" }],
+    });
+    res.send(userWithTrips.participant);
+  } catch (error) {
+    return res.status(400).send(error.message);
+  }
+});
+
 router.get("/:tripId", async (req, res, next) => {
   const tripId = req.params.tripId;
   try {
