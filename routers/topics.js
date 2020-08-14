@@ -51,7 +51,11 @@ router.post("/", authMiddleware, async (req, res, next) => {
         content,
         imageUrl,
       });
-      res.send(newTopic);
+      const topicWithUser = await Topic.findByPk(newTopic.id, {
+        include: { model: User },
+      });
+
+      res.send(topicWithUser);
     }
   } catch (error) {
     return res.status(400).send(error.message);
