@@ -85,7 +85,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
         tripId: newTrip.id,
         userId: userCreatingTrip,
       });
-      res.send({ newTrip: newTrip, firstParticipant: newParticipant });
+      res.send(newTrip);
     }
   } catch (error) {
     return res.status(400).send(error.message);
