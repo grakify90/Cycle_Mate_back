@@ -30,12 +30,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 1,
-          tripId: 2,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
           userId: 2,
           tripId: 2,
           createdAt: new Date(),
