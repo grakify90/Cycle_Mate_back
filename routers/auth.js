@@ -102,7 +102,10 @@ router.patch("/update", authMiddleware, async (req, res) => {
       gender,
       dateOfBirth,
     });
-    res.send(updatedUser);
+
+    const token = toJWT({ userId: userId });
+
+    res.status(201).send({ token, ...updatedUser.dataValues });
   } catch (error) {
     return res.status(400).send(error.message);
   }
