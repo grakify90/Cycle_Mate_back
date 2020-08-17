@@ -1,3 +1,4 @@
+const axios = require("axios");
 const { Router } = require("express");
 const Trip = require("../models").trip;
 const User = require("../models").user;
@@ -14,6 +15,86 @@ router.get("/", async (req, res, next) => {
     ],
   });
   res.send(allTrips);
+});
+
+//post a new trip for logged in user
+router.post("/", authMiddleware, async (req, res, next) => {
+  const {
+    title,
+    date,
+    locationCity,
+    locationProvince,
+    streetName,
+    streetNumber,
+    postalCode,
+    lengthKM,
+    numPeopleAllowed,
+    typeBike,
+    description,
+    tempo,
+    startingTime,
+  } = req.body;
+  if (
+    !title ||
+    !date ||
+    !locationCity ||
+    !locationProvince ||
+    !lengthKM ||
+    !numPeopleAllowed ||
+    !typeBike ||
+    !description ||
+    !tempo ||
+    !startingTime
+  ) {
+    res.status(400).send({
+      message:
+        "Please provide all the necessary properties to create a new trip (date, locationCity, locationProvince, lengthKM, numPeopleAllowed, typeBike, description, tempo, startingTime",
+    });
+    return;
+  }
+
+  //Using GeoCoding API to turn street+street number+postal code into coordinates
+  let geoData;
+  try {
+    const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
+      streetName + " " + streetNumber + " " + postalCode
+    )}&format=json`;
+    // If this request works, we will get detailed coordinates
+    geoData = await axios.get(url);
+  } catch (error) {
+    try {
+      const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
+        locationCity
+      )}&format=json`;
+      geoData = await axios.get(url);
+    } catch (error) {
+      res.status(400).send({ message: "Not found." });
+      return;
+    }
+  }
+
+  //We've received the geoData, now we're going to use it to put coordinates in our new row
+  const userCreatingTrip = req.user.id;
+  const newTrip = await Trip.create({
+    userId: userCreatingTrip,
+    title,
+    date,
+    locationCity,
+    locationProvince,
+    latitude: parseFloat(geoData.data[1].lat),
+    longitude: parseFloat(geoData.data[1].lon),
+    lengthKM: parseInt(lengthKM),
+    numPeopleAllowed: parseInt(numPeopleAllowed),
+    typeBike,
+    description,
+    tempo,
+    startingTime,
+  });
+  const newParticipant = await Participant.create({
+    tripId: newTrip.id,
+    userId: userCreatingTrip,
+  });
+  res.status(200).send(newTrip);
 });
 
 router.get("/oneuser", authMiddleware, async (req, res, next) => {
@@ -41,63 +122,6 @@ router.get("/:tripId", async (req, res, next) => {
       res.send(specificTrip);
     } else {
       res.status(404).send({ message: "Trip not found" });
-    }
-  } catch (error) {
-    return res.status(400).send(error.message);
-  }
-});
-
-//post a new trip for logged in user
-router.post("/", authMiddleware, async (req, res, next) => {
-  try {
-    const {
-      title,
-      date,
-      locationCity,
-      locationProvince,
-      lengthKM,
-      numPeopleAllowed,
-      typeBike,
-      description,
-      tempo,
-      startingTime,
-    } = req.body;
-    if (
-      !title ||
-      !date ||
-      !locationCity ||
-      !locationProvince ||
-      !lengthKM ||
-      !numPeopleAllowed ||
-      !typeBike ||
-      !description ||
-      !tempo ||
-      !startingTime
-    ) {
-      res.status(400).send({
-        message:
-          "Please provide all the necessary properties to create a new trip (date, locationCity, locationProvince, lengthKM, numPeopleAllowed, typeBike, description, tempo, startingTime",
-      });
-    } else {
-      const userCreatingTrip = req.user.id;
-      const newTrip = await Trip.create({
-        userId: userCreatingTrip,
-        title,
-        date,
-        locationCity,
-        locationProvince,
-        lengthKM,
-        numPeopleAllowed,
-        typeBike,
-        description,
-        tempo,
-        startingTime,
-      });
-      const newParticipant = await Participant.create({
-        tripId: newTrip.id,
-        userId: userCreatingTrip,
-      });
-      res.send(newTrip);
     }
   } catch (error) {
     return res.status(400).send(error.message);
