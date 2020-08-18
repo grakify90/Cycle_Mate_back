@@ -56,19 +56,26 @@ router.post("/", authMiddleware, async (req, res, next) => {
   //Using GeoCoding API to turn street+street number+postal code into coordinates
   let geoData;
   let precise;
+  let locationDetails;
   try {
     const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
       streetName + " " + streetNumber + " " + postalCode + " " + "Netherlands"
     )}&format=json`;
     // If this request works, we will get detailed coordinates
     geoData = await axios.get(url);
+    locationDetails = geoData.data[1].display_name;
     precise = true;
+    const checkLocationCity = locationDetails.includes(locationCity);
+    if (!checkLocationCity) {
+      throw new Error();
+    }
   } catch (error) {
     try {
       const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
         locationCity
       )}&format=json`;
       geoData = await axios.get(url);
+      locationDetails = "";
       precise = false;
     } catch (error) {
       res.status(400).send({ message: "Not found." });
@@ -85,6 +92,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
     locationCity,
     locationProvince,
     precise: precise,
+    locationDetails: locationDetails,
     latitude: parseFloat(geoData.data[1].lat),
     longitude: parseFloat(geoData.data[1].lon),
     lengthKM: parseInt(lengthKM),

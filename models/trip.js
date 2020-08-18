@@ -38,6 +38,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      locationDetails: {
+        type: DataTypes.STRING,
+      },
       precise: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
