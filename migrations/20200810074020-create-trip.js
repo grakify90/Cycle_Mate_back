@@ -28,6 +28,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      locationDetails: {
+        type: Sequelize.STRING,
+      },
       precise: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
