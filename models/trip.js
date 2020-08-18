@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      precise: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
       latitude: {
         type: DataTypes.FLOAT,
         allowNull: false,
