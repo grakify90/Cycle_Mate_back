@@ -4,6 +4,7 @@ const Trip = require("../models").trip;
 const User = require("../models").user;
 const Participant = require("../models").participant;
 const authMiddleware = require("../auth/middleware");
+require("dotenv").config();
 
 const router = new Router();
 
@@ -58,7 +59,9 @@ router.post("/", authMiddleware, async (req, res, next) => {
   let precise;
   let locationDetails;
   try {
-    const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
+    const url = `https://eu1.locationiq.com/v1/search.php?key=${
+      process.env.GEOCODING_API_KEY
+    }&q=${encodeURIComponent(
       streetName + " " + streetNumber + " " + postalCode + " " + "Netherlands"
     )}&format=json`;
     // If this request works, we will get detailed coordinates
