@@ -8,7 +8,8 @@ module.exports = {
         {
           userId: 4,
           topicId: 1,
-          content: "I'll help you :)",
+          content:
+            "Check out this link: https://www.wikihow.com/Fix-a-Bike-Tire",
           imageUrl: null,
           createdAt: new Date(),
           updatedAt: new Date(),

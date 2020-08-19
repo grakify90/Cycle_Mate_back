@@ -30,19 +30,19 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 2,
+          userId: 1,
           tripId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          userId: 3,
+          userId: 5,
           tripId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          userId: 4,
+          userId: 6,
           tripId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -62,6 +62,24 @@ module.exports = {
         {
           userId: 6,
           tripId: 3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: 2,
+          tripId: 4,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: 4,
+          tripId: 4,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: 2,
+          tripId: 5,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

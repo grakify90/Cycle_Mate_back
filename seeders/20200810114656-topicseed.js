@@ -6,19 +6,20 @@ module.exports = {
       "topics",
       [
         {
-          userId: 5,
-          title: "How do I change my tire?",
-          content: "I'm totally lost, please help",
+          userId: 4,
+          title: "Flat tire...now what?",
+          content: "I'm totally lost, please help!",
           imageUrl:
             "https://www.sefiles.net/merchant/364/images/site/3130061151_89c05e6440.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          userId: 6,
+          userId: 1,
           title: "Show off your bike!",
-          content: "Please show a picture :)",
-          imageUrl: null,
+          content: "This is mine :)",
+          imageUrl:
+            "https://cdn.road.cc/sites/default/files/cropped/preview_500/images/Hewitt%20Cheviot%20SE/Hewitt%20Cheviot%20SE.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
