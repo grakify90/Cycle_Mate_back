@@ -7,7 +7,7 @@ module.exports = {
       [
         {
           userId: 1,
-          date: new Date(2020, 10, 22),
+          date: new Date(2020, 9, 22),
           title: "Trip around the island",
           startingTime: "10:30",
           locationCity: "Dordrecht",
@@ -28,7 +28,7 @@ module.exports = {
         },
         {
           userId: 1,
-          date: new Date(2020, 10, 28),
+          date: new Date(2020, 9, 28),
           title: "Windmills at Kinderdijk",
           startingTime: "10:30",
           locationCity: "Alblasserdam",
@@ -49,7 +49,7 @@ module.exports = {
         },
         {
           userId: 2,
-          date: new Date(2020, 10, 29),
+          date: new Date(2020, 9, 29),
           title: "Through the woods and dunes",
           startingTime: "9:30",
           locationCity: "Kaatsheuvel",
@@ -70,7 +70,7 @@ module.exports = {
         },
         {
           userId: 2,
-          date: new Date(2020, 10, 30),
+          date: new Date(2020, 9, 30),
           title: "Along the Rotte",
           startingTime: "10:00",
           locationCity: "Zevenhuizen",
@@ -91,7 +91,7 @@ module.exports = {
         },
         {
           userId: 2,
-          date: new Date(2020, 10, 31),
+          date: new Date(2020, 9, 31),
           title: "The Spínola route",
           startingTime: "11:00",
           locationCity: "Breda",

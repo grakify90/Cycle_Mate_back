@@ -9,13 +9,19 @@ require("dotenv").config();
 const router = new Router();
 
 router.get("/", async (req, res, next) => {
-  const allTrips = await Trip.findAll({
+  const limit = req.query.limit || 20;
+  const offset = req.query.offset || 0;
+  const sortedAndPaginatedTrips = await Trip.findAndCountAll({
+    order: [["date", "ASC"]],
+    limit,
+    offset,
+
     include: [
       { model: User, as: "participant" },
       { model: User, as: "owner" },
     ],
   });
-  res.send(allTrips);
+  res.send(sortedAndPaginatedTrips);
 });
 
 //post a new trip for logged in user
@@ -74,9 +80,9 @@ router.post("/", authMiddleware, async (req, res, next) => {
     }
   } catch (error) {
     try {
-      const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
-        locationCity
-      )}&format=json`;
+      const url = `https://eu1.locationiq.com/v1/search.php?key=${
+        process.env.GEOCODING_API_KEY
+      }&q=${encodeURIComponent(locationCity)}&format=json`;
       geoData = await axios.get(url);
       locationDetails = "";
       precise = false;
@@ -109,14 +115,21 @@ router.post("/", authMiddleware, async (req, res, next) => {
     tripId: newTrip.id,
     userId: userCreatingTrip,
   });
-  res.status(200).send(newTrip);
+  const newTripWithParticipants = await Trip.findByPk(newTrip.id, {
+    include: [
+      { model: User, as: "participant" },
+      { model: User, as: "owner" },
+    ],
+  });
+
+  res.status(200).send(newTripWithParticipants);
 });
 
 router.get("/oneuser", authMiddleware, async (req, res, next) => {
   const userParticipatingInTrip = req.user.id;
   try {
     const userWithTrips = await User.findByPk(userParticipatingInTrip, {
-      include: [{ model: Trip, as: "participant" }],
+      include: [{ model: Trip, as: "participant", order: [["date", "ASC"]] }],
     });
     res.send(userWithTrips.participant);
   } catch (error) {
