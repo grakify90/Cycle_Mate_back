@@ -24,7 +24,6 @@ transporter.use(
   "compile",
   hbs({
     viewEngine: "express-handlebars",
-    //CHANGE TO CORRECT PATH!
     viewPath: "./",
   })
 );
