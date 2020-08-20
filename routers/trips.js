@@ -4,6 +4,7 @@ const Trip = require("../models").trip;
 const User = require("../models").user;
 const Participant = require("../models").participant;
 const authMiddleware = require("../auth/middleware");
+const { Op } = require("sequelize");
 require("dotenv").config();
 
 const router = new Router();
@@ -15,7 +16,11 @@ router.get("/", async (req, res, next) => {
     order: [["date", "ASC"]],
     limit,
     offset,
-
+    where: {
+      date: {
+        [Op.gt]: new Date(),
+      },
+    },
     include: [
       { model: User, as: "participant" },
       { model: User, as: "owner" },
@@ -129,7 +134,18 @@ router.get("/oneuser", authMiddleware, async (req, res, next) => {
   const userParticipatingInTrip = req.user.id;
   try {
     const userWithTrips = await User.findByPk(userParticipatingInTrip, {
-      include: [{ model: Trip, as: "participant", order: [["date", "ASC"]] }],
+      include: [
+        {
+          model: Trip,
+          as: "participant",
+          order: [["date", "ASC"]],
+          where: {
+            date: {
+              [Op.gt]: new Date(),
+            },
+          },
+        },
+      ],
     });
     res.send(userWithTrips.participant);
   } catch (error) {
