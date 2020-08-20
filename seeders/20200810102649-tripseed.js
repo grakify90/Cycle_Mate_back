@@ -91,6 +91,7 @@ module.exports = {
         },
         {
           userId: 2,
+
           date: new Date(2020, 9, 31),
           title: "The Spínola route",
           startingTime: "11:00",
