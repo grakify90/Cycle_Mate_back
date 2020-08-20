@@ -34,7 +34,7 @@ module.exports = {
         allowNull: false,
       },
       dateOfBirth: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
