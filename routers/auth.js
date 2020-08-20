@@ -4,8 +4,30 @@ const { toJWT } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
 const User = require("../models/").user;
 const { SALT_ROUNDS } = require("../config/constants");
+const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
+require("dotenv").config();
 
 const router = new Router();
+
+//Setting up nodemailer and using email template
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_GMAIL,
+    pass: process.env.PASSWORD_GMAIL,
+  },
+  debug: true, // show debug output
+  logger: true, // log information in console
+});
+transporter.use(
+  "compile",
+  hbs({
+    viewEngine: "express-handlebars",
+    //CHANGE TO CORRECT PATH!
+    viewPath: "./",
+  })
+);
 
 router.post("/login", async (req, res, next) => {
   try {
@@ -68,6 +90,28 @@ router.post("/signup", async (req, res) => {
       aboutMe,
       gender,
       dateOfBirth,
+    });
+
+    //Configuring welcome email
+    let mailOptions = {
+      from: '"Cycle Mate" <cyclemate137@gmail.com>',
+      to: `${newUser.email}`,
+      subject: "Welcome to Cycle Mate!",
+      text: "Plain text version of the html",
+      attachments: [{ filename: "cyclemate.jpg", path: "./cyclemate.jpg" }],
+      template: "main",
+      //Passing variables to email template
+      context: {
+        name: `${newUser.firstName}`,
+      },
+    };
+
+    //Sending email to new user
+    transporter.sendMail(mailOptions, (error, data) => {
+      if (error) {
+        return console.log("Error occurred", error);
+      }
+      console.log("Email sent: %s", data.messageId);
     });
 
     delete newUser.dataValues["password"];
