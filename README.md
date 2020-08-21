@@ -2,6 +2,10 @@
 
 ## [Frontend repository](https://github.com/grakify90/Cycle_Mate_front)
 
+## How to use
+- `git clone git@github.com:grakify90/Cycle_Mate_back.git`
+- To install all the packages: `npm install`
+
 ## Database Model
 
 <img src="DataBase-diagram.svg"
