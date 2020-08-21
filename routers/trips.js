@@ -81,7 +81,8 @@ router.post("/", authMiddleware, async (req, res, next) => {
     )}&format=json`;
     // If this request works, we will get detailed coordinates
     geoData = await axios.get(url);
-    locationDetails = geoData.data[1].display_name;
+    console.log(geoData.data[0]);
+    locationDetails = geoData.data[0].display_name;
     precise = true;
     const checkLocationCity = locationDetails.includes(locationCity);
     if (!checkLocationCity) {
@@ -115,8 +116,8 @@ router.post("/", authMiddleware, async (req, res, next) => {
     locationProvince,
     precise: precise,
     locationDetails: locationDetails,
-    latitude: parseFloat(geoData.data[1].lat),
-    longitude: parseFloat(geoData.data[1].lon),
+    latitude: parseFloat(geoData.data[0].lat),
+    longitude: parseFloat(geoData.data[0].lon),
     lengthKM: parseInt(lengthKM),
     numPeopleAllowed: parseInt(numPeopleAllowed),
     typeBike,
