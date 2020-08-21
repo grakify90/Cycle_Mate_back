@@ -11,11 +11,12 @@ require("dotenv").config();
 const router = new Router();
 
 //Setting up nodemailer and using email template
+//fix this for deployed version so it uses env. variables!
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_GMAIL,
-    pass: process.env.PASSWORD_GMAIL,
+    user: "cyclemate137@gmail.com",
+    pass: "moeilijkwachtwoord",
   },
   debug: true, // show debug output
   logger: true, // log information in console
