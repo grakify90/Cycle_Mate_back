@@ -1,6 +1,6 @@
 # Cycle Mate 🚴 Enjoying our love for cycling together
 
-## [Frontend repository](https://github.com/grakify90/Portfolio_project_frontend)
+## [Frontend repository](https://github.com/grakify90/Cycle_Mate_front)
 
 ## Database Model
 
