@@ -70,9 +70,13 @@ router.post("/", authMiddleware, async (req, res, next) => {
   let precise;
   let locationDetails;
   try {
-    const url = `https://eu1.locationiq.com/v1/search.php?key=${
-      process.env.GEOCODING_API_KEY
-    }&q=${encodeURIComponent(
+    //need to fix this so deployed version will use these .env variables
+    // const url = `https://eu1.locationiq.com/v1/search.php?key=${
+    //   process.env.GEOCODING_API_KEY
+    // }&q=${encodeURIComponent(
+    //   streetName + " " + streetNumber + " " + postalCode + " " + "Netherlands"
+    // )}&format=json`;
+    const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
       streetName + " " + streetNumber + " " + postalCode + " " + "Netherlands"
     )}&format=json`;
     // If this request works, we will get detailed coordinates
@@ -85,9 +89,13 @@ router.post("/", authMiddleware, async (req, res, next) => {
     }
   } catch (error) {
     try {
-      const url = `https://eu1.locationiq.com/v1/search.php?key=${
-        process.env.GEOCODING_API_KEY
-      }&q=${encodeURIComponent(locationCity)}&format=json`;
+      //need to fix this so deployed version will use these .env variables
+      // const url = `https://eu1.locationiq.com/v1/search.php?key=${
+      //   process.env.GEOCODING_API_KEY
+      // }&q=${encodeURIComponent(locationCity)}&format=json`;
+      const url = `https://eu1.locationiq.com/v1/search.php?key=946fe32ae8771d&q=${encodeURIComponent(
+        locationCity
+      )}&format=json`;
       geoData = await axios.get(url);
       locationDetails = "";
       precise = false;
